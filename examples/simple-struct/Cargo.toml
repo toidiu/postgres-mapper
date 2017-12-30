@@ -1,0 +1,17 @@
+[package]
+authors = ["Zeyla Hellyer <zey@zey.moe>"]
+name = "simple-struct"
+version = "0.1.0"
+
+[dependencies]
+postgres = "~0.15"
+tokio-postgres = "*"
+
+[dependencies.postgres-mapper]
+features = ["postgres-support"]
+path = "../../"
+
+[dependencies.postgres-mapper-derive]
+default-features = false
+features = ["postgres-mapper", "postgres-support"]
+path = "../../postgres_mapper_derive"
