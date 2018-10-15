@@ -4,7 +4,10 @@ extern crate syn;
 
 use proc_macro::TokenStream;
 use quote::Tokens;
-use syn::{Body, DeriveInput, Field, Ident, VariantData};
+use syn::{Body, DeriveInput, VariantData};
+
+#[cfg(any(feature = "postgres-support", "tokio-postgres-support")]
+use syn::{Field, Ident};
 
 #[proc_macro_derive(PostgresMapper)]
 pub fn postgres_mapper(input: TokenStream) -> TokenStream {
@@ -17,8 +20,10 @@ pub fn postgres_mapper(input: TokenStream) -> TokenStream {
 }
 
 fn impl_derive(ast: &DeriveInput) -> Tokens {
+    #[allow(unused_mut)]
     let mut tokens = Tokens::new();
 
+    #[allow(unused_variables)]
     let fields = match ast.body {
         Body::Struct(VariantData::Struct(ref fields)) => fields,
         Body::Struct(VariantData::Tuple(_)) => panic!("Tuple-structs not supported"),
