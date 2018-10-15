@@ -6,7 +6,7 @@ use proc_macro::TokenStream;
 use quote::Tokens;
 use syn::{Body, DeriveInput, VariantData};
 
-#[cfg(any(feature = "postgres-support", "tokio-postgres-support")]
+#[cfg(any(feature = "postgres-support", feature = "tokio-postgres-support"))]
 use syn::{Field, Ident};
 
 #[proc_macro_derive(PostgresMapper)]
