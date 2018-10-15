@@ -13,12 +13,12 @@ version = "0.1.0"
 status = "actively-developed"
 
 [dependencies.postgres]
-git = "https://github.com/sfackler/rust-postgres"
 optional = true
+version = "0.15"
 
 [dependencies.tokio-postgres]
-git = "https://github.com/sfackler/rust-postgres"
 optional = true
+version = "0.3"
 
 [features]
 default = ["postgres-support"]
