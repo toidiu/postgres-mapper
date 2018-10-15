@@ -10,7 +10,7 @@ use std::fmt::{Display, Formatter, Result as FmtResult};
 #[cfg(feature = "postgres-support")]
 use postgres::rows::Row as PostgresRow;
 #[cfg(feature = "tokio-postgres-support")]
-use tokio_postgres::Row as TokioRow;
+use tokio_postgres::rows::Row as TokioRow;
 
 /// Trait containing various methods for converting from a postgres Row to a
 /// mapped type.
