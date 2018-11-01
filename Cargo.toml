@@ -9,6 +9,9 @@ name = "postgres-mapper"
 repository = "https://github.com/zeyla/postgres-mapper.git"
 version = "0.1.0"
 
+[lib]
+doctest = false
+
 [badges.maintenance]
 status = "actively-developed"
 
@@ -24,3 +27,4 @@ version = "0.3"
 default = ["postgres-support"]
 postgres-support = ["postgres"]
 tokio-postgres-support = ["tokio-postgres"]
+

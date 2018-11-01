@@ -157,6 +157,30 @@ pub trait FromPostgresRow: Sized {
     /// [`Error::ColumnNotFound`]: enum.Error.html#variant.ColumnNotFound
     /// [`Error::Postgres`]: enum.Error.html#variant.Postgres
     fn from_postgres_row_ref(row: &PostgresRow) -> Result<Self, Error>;
+
+
+    /// Get a list of the field names which can be used to construct
+    /// a SQL query.
+    ///
+    /// We also expect an attribute tag #[pg_mapper(table = "foo")]
+    /// so that a scoped list of fields can be generated.
+    ///
+    /// Example:
+    ///
+    /// The following will return the String " user.id, user.email ".
+    /// Note the extra spaces on either side to avoid incorrect formatting.
+    ///
+    /// ```
+    ///     #[derive(PostgresMapper)]
+    ///     #[pg_mapper(table = "user")]
+    ///     pub struct User {
+    ///         pub id: i64,
+    ///         pub email: Option<String>,
+    ///     }
+    /// ```
+    ///
+    ///
+    fn sql_fields() -> String;
 }
 
 /// Trait containing various methods for converting from a `tokio-postgres` Row
