@@ -139,6 +139,22 @@ impl ::postgres_mapper::FromPostgresRow for {struct_name} {{
         })
     }");
 
+    t.append(
+    format!(
+    "fn sql_fields() -> String {{")
+    );
+
+    let field_name = fields.iter().map(|field| {
+        let ident = field.ident.clone().expect("Expected structfield identifier");
+        format!("{0}", ident)
+    }).collect::<Vec<String>>().join(", ");
+
+    t.append(format!("\" {0} \".to_string()", field_name));
+
+    t.append(
+    "}"
+    );
+
     t.append(format!(
     "fn sql_table() -> String {{
         \" {0} \".to_string()
@@ -147,7 +163,7 @@ impl ::postgres_mapper::FromPostgresRow for {struct_name} {{
 
     t.append(
     format!(
-    "fn sql_fields() -> String {{")
+    "fn sql_table_dot_fields() -> String {{")
     );
 
     let field_name = fields.iter().map(|field| {
@@ -254,6 +270,22 @@ impl ::postgres_mapper::FromTokioPostgresRow for {struct_name} {{
     t.append(
     format!(
     "fn sql_fields() -> String {{")
+    );
+
+    let field_name = fields.iter().map(|field| {
+        let ident = field.ident.clone().expect("Expected structfield identifier");
+        format!("{0}", ident)
+    }).collect::<Vec<String>>().join(", ");
+
+    t.append(format!("\" {0} \".to_string()", field_name));
+
+    t.append(
+    "}"
+    );
+
+    t.append(
+    format!(
+    "fn sql_table_dot_fields() -> String {{")
     );
 
     let field_name = fields.iter().map(|field| {
