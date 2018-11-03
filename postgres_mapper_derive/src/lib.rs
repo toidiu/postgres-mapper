@@ -139,6 +139,12 @@ impl ::postgres_mapper::FromPostgresRow for {struct_name} {{
         })
     }");
 
+    t.append(format!(
+    "fn sql_table() -> String {{
+        \" {0} \".to_string()
+    }}"
+    , table_name));
+
     t.append(
     format!(
     "fn sql_fields() -> String {{")
@@ -237,6 +243,12 @@ impl ::postgres_mapper::FromTokioPostgresRow for {struct_name} {{
     t.append("
         })
     }");
+
+    t.append(format!(
+    "fn sql_table() -> String {{
+        \" {0} \".to_string()
+    }}"
+    , table_name));
 
     t.append(
     format!(

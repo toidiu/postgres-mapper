@@ -56,13 +56,15 @@ pub struct User {
 }
 
 // Code to execute a query here and get back a row might now look like:
-let stmt = "SELECT {$1} FROM users
-    WHERE username = {$2} AND password = {$3}";
+let stmt = "SELECT {$1} FROM {$2}
+    WHERE username = {$3} AND password = {$4}";
 
 let rows = &self
     .conn
-    .query(stmt, &[&db_types::User::sql_fields(), username, pass])
-    .unwrap();
+    .query(
+        stmt,
+        &[&User::sql_fields(), &User::sql_table(), username, pass],
+    ).unwrap();
 
 let user = rows
     .iter()

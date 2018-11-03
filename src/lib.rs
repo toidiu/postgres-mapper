@@ -158,6 +158,22 @@ pub trait FromPostgresRow: Sized {
     /// [`Error::Postgres`]: enum.Error.html#variant.Postgres
     fn from_postgres_row_ref(row: &PostgresRow) -> Result<Self, Error>;
 
+    /// Get the name of the annotated sql table name.
+    ///
+    /// Example:
+    ///
+    /// The following will return the String " user ".
+    /// Note the extra spaces on either side to avoid incorrect formatting.
+    ///
+    /// ```
+    ///     #[derive(PostgresMapper)]
+    ///     #[pg_mapper(table = "user")]
+    ///     pub struct User {
+    ///         pub id: i64,
+    ///         pub email: Option<String>,
+    ///     }
+    /// ```
+    fn sql_table() -> String;
 
     /// Get a list of the field names which can be used to construct
     /// a SQL query.
