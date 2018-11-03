@@ -238,6 +238,45 @@ pub trait FromTokioPostgresRow: Sized {
     /// [`Error::ColumnNotFound`]: enum.Error.html#variant.ColumnNotFound
     /// [`Error::Conversion`]: enum.Error.html#variant.Conversion
     fn from_tokio_postgres_row_ref(row: &TokioRow) -> Result<Self, Error>;
+
+    /// Get the name of the annotated sql table name.
+    ///
+    /// Example:
+    ///
+    /// The following will return the String " user ".
+    /// Note the extra spaces on either side to avoid incorrect formatting.
+    ///
+    /// ```
+    ///     #[derive(PostgresMapper)]
+    ///     #[pg_mapper(table = "user")]
+    ///     pub struct User {
+    ///         pub id: i64,
+    ///         pub email: Option<String>,
+    ///     }
+    /// ```
+    fn sql_table() -> String;
+
+    /// Get a list of the field names which can be used to construct
+    /// a SQL query.
+    ///
+    /// We also expect an attribute tag #[pg_mapper(table = "foo")]
+    /// so that a scoped list of fields can be generated.
+    ///
+    /// Example:
+    ///
+    /// The following will return the String " user.id, user.email ".
+    /// Note the extra spaces on either side to avoid incorrect formatting.
+    ///
+    /// ```
+    ///     #[derive(PostgresMapper)]
+    ///     #[pg_mapper(table = "user")]
+    ///     pub struct User {
+    ///         pub id: i64,
+    ///         pub email: Option<String>,
+    ///     }
+    /// ```
+    ///
+    fn sql_fields() -> String;
 }
 
 /// General error type returned throughout the library.
