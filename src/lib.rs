@@ -179,7 +179,6 @@ pub trait FromPostgresRow: Sized {
     ///     }
     /// ```
     ///
-    ///
     fn sql_fields() -> String;
 }
 

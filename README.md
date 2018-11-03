@@ -48,16 +48,30 @@ extern crate postgres_mapper;
 use postgres_mapper::FromPostgresRow;
 
 #[derive(PostgresMapper)]
+#[pg_mapper(table = "user")]
 pub struct User {
     pub id: i64,
     pub name: String,
     pub email: Option<String>,
 }
 
-// code to execute a query here and get back a row
+// Code to execute a query here and get back a row might now look like:
+let stmt = "SELECT {$1} FROM users
+    WHERE username = {$2} AND password = {$3}";
 
-// `postgres_mapper::FromPostgresRow`'s methods do not panic and return a Result
-let user = User::from_postgres_row(row)?;
+let rows = &self
+    .conn
+    .query(stmt, &[&db_types::User::sql_fields(), username, pass])
+    .unwrap();
+
+let user = rows
+    .iter()
+    .next()
+    .map(|row|
+      // `postgres_mapper::FromPostgresRow`'s methods do not panic and return a Result
+      User::from_postgres_row(row)?
+    );
+
 ```
 
 ### The two crates
